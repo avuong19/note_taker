@@ -33,6 +33,9 @@ app.get('/notes', (req, res) => {
 function writeNotes(input,id){
     const noteInput=input;
     if(!Array.isArray(id))
+    id =[];
+
+    if (id.length === 0)
     id.push(0);
 
     input.id=id[0];
