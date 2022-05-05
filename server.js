@@ -46,7 +46,7 @@ function writeNotes(input,id){
         path.join(__dirname,'./db/db.json'),
         JSON.stringify(id,null,2)
     );
-    return input;
+    return noteInput;
 
 }
 app.post('/api/notes',(req,res) =>{
