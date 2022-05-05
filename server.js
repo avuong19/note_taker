@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 const noteDb = require('./db/db.json');
-const { json } = require('body-parser');
+
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
@@ -53,7 +53,7 @@ app.post('/api/notes',(req,res) =>{
     const noteInput =writeNotes(req.input,noteDb);
     res.json(noteInput);
 
-})
+});
 
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
