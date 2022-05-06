@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
+const { response } = require('express');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -31,28 +32,24 @@ app.get('/notes', (req, res) => {
 });
 
 
-function writeNotes(input,id){
+function writeNotes(input,res){
     const noteInput=input;
-    if(!Array.isArray(id))
-    id =[];
+    let tempNote;
+    tempNote.id=Date.now();
 
-    if (id.length === 0)
-    id.push(0);
+    tempNote.title=input.title; 
+    tempNote.text=input.text;
+    tempNote=JSON.stringify(tempNote);
+    res.json(fs.appendFile(
+        './db/db.json', tempNote, err => console.log(error)
+    ));
 
-    input.id=id[0];
-    id[0]++;
 
-    id.push(noteInput);
-    fs.writeFileSync(
-        path.join(__dirname,'./db/db.json'),
-        JSON.stringify(id,null,2)
-    );
-    return noteInput;
 
 }
 app.post('/api/notes',(req,res) =>{
-    const noteInput =writeNotes(req.input,noteDb);
-    res.json(noteInput);
+    const noteInput =writeNotes(req.body,response);
+   
 
 });
 
