@@ -5,8 +5,9 @@ const express = require('express');
 const PORT = process.env.PORT || 3001;
 const app = express();
 
-const noteDb = require('./db/db.json');
 
+const rawData = fs.readFileSync('./db/db.json');
+const noteDb = JSON.parse(rawData);
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
