@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const { response } = require('express');
+const { json } = require('express/lib/response');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -33,22 +34,28 @@ app.get('/notes', (req, res) => {
 
 
 function writeNotes(input,res){
-    const noteInput=input;
+   // const noteInput=input;
     let tempNote;
     tempNote.id=Date.now();
 
     tempNote.title=input.title; 
     tempNote.text=input.text;
-    tempNote=JSON.stringify(tempNote);
-    res.json(fs.appendFile(
-        './db/db.json', tempNote, err => console.log(error)
+   
+
+    let attempArray=noteDb;
+    attempArray.push(tempNote);
+    attempArray=JSON.stringify(attempArray);
+
+
+    res.json(fs.writeFile(
+        './db/db.json', attempArray, err => console.log(err)
     ));
 
 
 
 }
-app.post('/api/notes',(req,res) =>{
-    const noteInput =writeNotes(req.body,response);
+app.post('/notes',(req,res) =>{
+    const noteInput =writeNotes(req.body,res);
    
 
 });
